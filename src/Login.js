@@ -5,13 +5,26 @@ export default function Login({ onLoginSuccess }) {
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (username === "admin" && password === "password") {
-      setMessage("Login successful!");
-      if (onLoginSuccess) onLoginSuccess();
-    } else {
-      setMessage("Invalid credentials.");
+    setMessage("");
+    try {
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ username, password })
+      });
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setMessage("Login successful!");
+        if (onLoginSuccess) onLoginSuccess();
+      } else {
+        setMessage(data.error || "Invalid credentials.");
+      }
+    } catch (err) {
+      setMessage("Error logging in.");
     }
   };
 
