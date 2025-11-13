@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import Login from './Login';
 import './App.css';
 
 const API_BASE = '';
@@ -14,10 +15,11 @@ const endpoints = [
 function App() {
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // Call all APIs on page load
   useEffect(() => {
+    if (!isLoggedIn) return;
     const fetchAll = async () => {
       setLoading(true);
       const newResults = [];
@@ -34,7 +36,7 @@ function App() {
       setLoading(false);
     };
     fetchAll();
-  }, []);
+  }, [isLoggedIn]);
 
   const callApi = async (path) => {
     setLoading(true);
@@ -47,6 +49,10 @@ function App() {
     }
     setLoading(false);
   };
+
+  if (!isLoggedIn) {
+    return <Login onLoginSuccess={() => setIsLoggedIn(true)} />;
+  }
 
   return (
     <div className="app-container">
