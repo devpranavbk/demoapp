@@ -2,5 +2,5 @@
   {"id": 1, "name": "Apple", "price": 0.88},
   {"id": 2, "name": "Banana", "price": 0.69},
   {"id": 3, "name": "Orange", "price": 0.89},
-  {"id": 4, "name": "Grape", "price": 0.41}
+  {"id": 4, "name": "Grape", "price": 0.11}
 ]
