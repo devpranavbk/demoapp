@@ -1,0 +1,58 @@
+name: Run Tests with HyperExecute
+
+on:
+  push:
+    tags:
+      - '*'          # Trigger on any tag push
+  pull_request:      # Also trigger on PRs if needed
+    branches:
+      - main
+
+jobs:
+  hyperexecute-v1:
+    if: startsWith(github.ref, 'refs/tags/v1')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Download HyperExecute CLI
+        run: |
+          curl -L https://downloads.lambdatest.com/hyperexecute/linux/hyperexecute -o hyperexecute
+          chmod +x hyperexecute
+
+      - name: Run HyperExecute tests for v1
+        run: |
+          ./hyperexecute --user ${{ secrets.LT_USERNAME }} --key ${{ secrets.LT_ACCESS_KEY }} --config ./hyperexecute.yaml
+
+  hyperexecute-v2:
+    if: startsWith(github.ref, 'refs/tags/v2')
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Download HyperExecute CLI
+        run: |
+          curl -L https://downloads.lambdatest.com/hyperexecute/linux/hyperexecute -o hyperexecute
+          chmod +x hyperexecute
+
+      - name: Run HyperExecute tests for v2
+        run: |
+          ./hyperexecute --user ${{ secrets.LT_USERNAME }} --key ${{ secrets.LT_ACCESS_KEY }} --config ./hyperexecute-v2.yaml
+
+  hyperexecute-pr:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Download HyperExecute CLI
+        run: |
+          curl -L https://downloads.lambdatest.com/hyperexecute/linux/hyperexecute -o hyperexecute
+          chmod +x hyperexecute
+
+      - name: Run HyperExecute tests for PR
+        run: |
+          ./hyperexecute --user ${{ secrets.LT_USERNAME }} --key ${{ secrets.LT_ACCESS_KEY }} --config ./hyperexecute-pr.yaml
