@@ -28,4 +28,11 @@ jobs:
             -H "Authorization: Bearer ${{ secrets.REPO_B_TOKEN }}" \
             -H "Content-Type: application/json" \
             https://api.github.com/repos/devpranavbk/HyperPerf/dispatches \
-            -d "{\"event_type\":\"perf_test_trigger\",\"client_payload\":{\"vercel_url\":\"${{ steps.vercel.outputs.url }}\"}}"
+            -d "{
+              \"event_type\":\"perf_test_trigger\",
+              \"client_payload\":{
+                \"vercel_url\":\"${{ steps.vercel.outputs.url }}\",
+                \"commit_sha\":\"${{ github.sha }}\",
+                \"repo_full_name\":\"${{ github.repository }}\"
+              }
+            }"
