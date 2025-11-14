@@ -7,7 +7,7 @@ import os
 # SITE_URL = "https://demoapp-5owbzfpse-dev-pranavs-projects.vercel.app/"
 # USERNAME = "admin"
 # PASSWORD = "password"
-SITE_URL = os.getenv("SITE_URL", "https://demoapp-ashen.vercel.app/")
+SITE_URL = os.getenv("SITE_URL", "https://neda-supernormal-domenica.ngrok-free.dev")
 USERNAME = os.getenv("USERNAME", "admin")
 PASSWORD = os.getenv("PASSWORD", "password")
 
@@ -38,7 +38,7 @@ with sync_playwright() as p:
 
     page.on("request", log_request)
     page.goto(SITE_URL)
-    # page.get_by_text("Visit Site").click()
+    page.get_by_text("Visit Site").click()
     page.fill(USERNAME_SELECTOR, USERNAME)
     page.fill(PASSWORD_SELECTOR, PASSWORD)
     page.click(LOGIN_BUTTON_SELECTOR)
