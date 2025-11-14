@@ -18,7 +18,7 @@ export default function Login({ onLoginSuccess }) {
       });
       const data = await res.json();
       if (res.ok && data.success) {
-        setMessage("Login successful!");
+        setMessage("Login successful!!");
         if (onLoginSuccess) onLoginSuccess();
       } else {
         setMessage(data.error || "Invalid credentials.");
