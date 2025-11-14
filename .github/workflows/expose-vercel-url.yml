@@ -1,11 +1,9 @@
 name: Fetch Vercel URL and Trigger Perf Tests
 
 on:
-  pull_request:
-    types:
-      - opened
-      - synchronize
-      - reopened
+  push:
+    branches:
+      - main     # trigger ONLY when main branch receives a push
 
 jobs:
   get-url:
@@ -28,5 +26,6 @@ jobs:
           curl -X POST \
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ secrets.REPO_B_TOKEN }}" \
+            -H "Content-Type: application/json" \
             https://api.github.com/repos/devpranavbk/HyperPerf/dispatches \
             -d "{\"event_type\":\"perf_test_trigger\",\"client_payload\":{\"vercel_url\":\"${{ steps.vercel.outputs.url }}\"}}"
