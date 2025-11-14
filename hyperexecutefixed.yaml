@@ -1,0 +1,33 @@
+version: "0.1"
+
+runson: linux
+
+env:
+  CACHE_DIR: ./cache
+  RESULTS_DIR: ./results
+  "PAGE": "home"
+  CHROME_PATH: "/usr/bin/google-chrome"
+
+
+pre:
+  - sudo apt-get update
+  - sudo apt-get install -y wget gnupg unzip
+  - wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
+  - sudo apt install -y ./google-chrome-stable_current_amd64.deb
+  - export CHROME_PATH=/usr/bin/google-chrome
+  - npm install
+
+
+testSuites:
+  - node main-runner.js
+
+post:
+  - echo "✅ All tests finished"
+  - ls -la results || echo "No results directory found"
+
+mergeArtifacts: true
+
+uploadArtefacts:
+  - name: lighthouse-reports
+    path:
+      - lighthouse/**
