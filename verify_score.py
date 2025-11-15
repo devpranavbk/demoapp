@@ -1,12 +1,12 @@
 import json
 import sys
 
-SCORE_THRESHOLD = 100  # Required score for merge
+SCORE_THRESHOLD = 100 # Required score for merge
 
 try:
     with open("score_output.json", "r") as f:
         data = json.load(f)
-        score = float(data["pqi_score"])
+        score = float(data["success_rate"])
 except Exception as e:
     print("❌ Could not read score_output.json:", e)
     sys.exit(1)
