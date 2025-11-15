@@ -3,7 +3,10 @@ name: Fetch Vercel URL and Trigger Perf Tests
 on:
   push:
     branches:
-      - main     # trigger ONLY when main branch receives a push
+      - main  
+  pull_request:
+    types: [opened, synchronize, reopened]
+   # trigger ONLY when main branch receives a push
 
 jobs:
   hyperexecute-v1:
